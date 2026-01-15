@@ -71,11 +71,13 @@ After running both, you can use `compare_results_folders.py` to analyze the diff
 Our system employs a multi-stage pipeline to transform raw images into structured plate numbers.
 
 ### 1. Advanced Detection (The "Smart Detect" Logic)
-Unlike standard detection which uses a fixed confidence threshold, our system uses a **Recursive Detection Strategy**:
-- **Initial Pass**: Detects plates at a standard confidence (0.20).
-- **Confidence Retry**: If no plate is found, the system progressively lowers the confidence threshold (0.15, 0.10) to catch faint or distant detections.
-- **Enhancement Fallback**: If still no plate is found, it automatically applies image enhancements (**CLAHE**, **Gamma Correction**, and **Sharpening**) and retries.
-- **Resolution Scaling**: Finally, it attempts detection at multiple resolutions (480p and 1280p) to capture plates that are either too small or too grainy at native resolution.
+Unlike standard detection which uses a fixed confidence threshold, our system uses a **Recursive Detection Strategy** that prioritizes quality over raw noise:
+- **Phase 1: Standard (0.20)**: Initial attempt on the original image.
+- **Phase 2: Low-Conf (0.15)**: A quick second pass on the original image for slightly fainter results.
+- **Phase 3: Image Enhancement**: Applies **CLAHE**, **Gamma Correction**, and **Sharpening** to fix lighting issues, then retries at 0.15.
+- **Phase 4: Resolution Scaling**: Re-scans at 480p and 1280p to find plates that were too small or grainy, then retries at 0.15.
+- **Phase 5: Last Resort (0.10)**: Only if all above fails, it drops to an extremely low confidence threshold to find any possible trace of a plate.
+
 
 ### 2. Non-Maximum Suppression (NMS) Filtering
 To handle "double detections" or slightly overlapping bounding boxes from the ensemble models, we implemented a custom **IOU (Intersection over Union)** filter. This ensures that even if multiple models detect the same plate, only the most confident detection is passed to the OCR stage.
