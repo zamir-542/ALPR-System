@@ -97,5 +97,4 @@ To minimize common OCR errors and improve data quality, the system applies:
 - `Optimized.py`: Main execution script with retry logic and enhancements.
 - `Baseline.py`: Standard detection + OCR pipeline without enhancements.
 - `compare_results_folders.py`: Utility to compare accuracy between two result sets.
-- `random_images/`: Directory for input testing images.
 - `ocr_resultX/`: Generated output containing annotated images and cropped plates.
