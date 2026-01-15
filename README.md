@@ -87,10 +87,9 @@ We utilize **PaddleOCR** for its high accuracy in reading alphanumeric character
 - **Note**: Extensive testing showed that for PaddleOCR, providing the **raw crop** (BGR) often yielded better results than applying aggressive binary thresholding, as the engine's internal preprocessing is highly optimized.
 
 ### 4. Post-Processing & Text Cleaning
-To minimize "hallucinated" characters and improve data quality, the system applies:
+To minimize common OCR errors and improve data quality, the system applies:
 - **Character Mapping**: Automatically corrects common OCR errors (e.g., mapping 'O' to 'Q' for certain plate formats).
-- **Alphanumeric Filtering**: Removes special characters and spaces.
-- **Contextual Filtering**: Discards results that do not contain at least one digit, significantly reducing false positives from background noise.
+- **Alphanumeric Filtering**: Removes special characters and spaces to produce a clean plate string.
 
 ---
 
