@@ -73,8 +73,9 @@ Our system employs a multi-stage pipeline to transform raw images into structure
 ### 1. Advanced Detection (The "Smart Detect" Logic)
 Unlike standard detection which uses a fixed confidence threshold, our system uses a **Recursive Detection Strategy**:
 - **Initial Pass**: Detects plates at a standard confidence (0.20).
-- **Enhancement Fallback**: If no plate is found, the system automatically applies image enhancements (**CLAHE**, **Gamma Correction**, and **Sharpening**) and retries detection.
-- **Resolution Scaling**: If enhancements fail, it attempts detection at multiple resolutions (480p and 1280p) to capture plates that are either too small or too grainy at native resolution.
+- **Confidence Retry**: If no plate is found, the system progressively lowers the confidence threshold (0.15, 0.10) to catch faint or distant detections.
+- **Enhancement Fallback**: If still no plate is found, it automatically applies image enhancements (**CLAHE**, **Gamma Correction**, and **Sharpening**) and retries.
+- **Resolution Scaling**: Finally, it attempts detection at multiple resolutions (480p and 1280p) to capture plates that are either too small or too grainy at native resolution.
 
 ### 2. Non-Maximum Suppression (NMS) Filtering
 To handle "double detections" or slightly overlapping bounding boxes from the ensemble models, we implemented a custom **IOU (Intersection over Union)** filter. This ensures that even if multiple models detect the same plate, only the most confident detection is passed to the OCR stage.
