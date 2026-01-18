@@ -8,26 +8,6 @@ This project implements a robust Automatic License Plate Recognition (ALPR) syst
 
 ---
 
-## ⚡ Quick Start
-
-```bash
-# 1. Clone the repository
-git clone <your-repo-url>
-cd ALPR
-
-# 2. Install dependencies
-pip install opencv-python numpy ultralytics paddlepaddle paddleocr
-
-# 3. Place your model file (e.g., best (8).pt) in the root directory
-
-# 4. Add test images to random_images/ folder
-
-# 5. Run the optimized system
-python Optimized.py
-```
-
----
-
 ## 🛠 Setup Instructions
 
 ### 1. Prerequisites
